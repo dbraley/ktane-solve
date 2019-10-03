@@ -1,5 +1,15 @@
 package password
 
+var DefaultWords = []string{
+	"about", "after", "again", "below", "could",
+	"every", "first", "found", "great", "house",
+	"large", "learn", "never", "other", "place",
+	"plant", "point", "right", "small", "sound",
+	"spell", "still", "study", "their", "there",
+	"these", "thing", "think", "three", "water",
+	"where", "which", "world", "would", "write",
+}
+
 func Solve(possibleIndexLetters map[int][]rune, possibleWords []string) []string {
 	for letterIndex, possibleRunes := range possibleIndexLetters {
 		possibleWords = keepIf(possibleWords, func(word string) bool {

@@ -16,7 +16,11 @@ limitations under the License.
 package cmd
 
 import (
+	"bufio"
 	"fmt"
+	"github.com/dbraley/ktane-solve/password"
+	"os"
+	"strings"
 
 	"github.com/spf13/cobra"
 )
@@ -26,15 +30,40 @@ var wordFile string
 // passwordCmd represents the password command
 var passwordCmd = &cobra.Command{
 	Use:   "password",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Attempt to solve the password module",
+	Long: `An interactive prompt to solve the password module.
+Enter all letters that could be in a given position in the word.
+The word list will be appropriately filtered down until only 1 word
+(or 0 in an error) remains.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("password called", wordFile)
+		if wordFile != "" {
+			fmt.Println("Functionality to provide user defined word list is not yet implemented")
+		}
+		reader := bufio.NewReader(os.Stdin)
+		words := password.DefaultWords
+		fmt.Printf("Initial Words Possible:\n%v\n", words)
+		for i := 0; ; i++ {
+			fmt.Printf("\nInput possible letters for position %d: ", i)
+			text, err := reader.ReadString('\n')
+			if err != nil {
+				panic(err)
+			}
+			// convert CRLF to LF
+			runes := []rune(strings.Replace(text, "\n", "", -1))
+			words = password.Solve(map[int][]rune{
+				i: runes,
+			}, words)
+			switch len(words) {
+			case 0:
+				fmt.Println("\n\nERROR!!!\nNo remaining possible words!")
+				return
+			case 1:
+				fmt.Println("\n\nSOLVED!!!\nThe word is:", words[0])
+				return
+			default:
+				fmt.Printf("Possible words remaining:\n%v\n", words)
+			}
+		}
 	},
 }
 
