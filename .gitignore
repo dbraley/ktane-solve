@@ -145,7 +145,10 @@ Temporary Items
 # Custom Project Specific Ignore
 
 # gitignore.io never seems to get the whole idea folder correctly
-.idea
+.idea/
 
 # ignore the artifact if `go build` is run
 ktane-solve
+
+# goreleaser
+dist/
