@@ -3,6 +3,9 @@ package password
 func Solve(possibleIndexLetters map[int][]rune, possibleWords []string) []string {
 	for letterIndex, possibleRunes := range possibleIndexLetters {
 		possibleWords = keepIf(possibleWords, func(word string) bool {
+			if len(word) <= letterIndex {
+				return false
+			}
 			return contains(possibleRunes, rune(word[letterIndex]))
 		})
 	}

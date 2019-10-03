@@ -63,6 +63,16 @@ func TestSolve(t *testing.T) {
 			},
 			[]string{"ddd"},
 		},
+		{
+			"Excludes words that are too short",
+			args{
+				map[int][]rune{
+					2: {'a'},
+				},
+				[]string{"aa", "aaa"},
+			},
+			[]string{"aaa"},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
