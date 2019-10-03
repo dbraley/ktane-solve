@@ -17,8 +17,19 @@ func TestSolve(t *testing.T) {
 	}{
 		{
 			"Returns an empty slice",
-			args{},
+			args{
+				map[int][]rune{},
+				[]string{},
+			},
 			[]string{},
+		},
+		{
+			"Returns the word map when not filtered",
+			args{
+				map[int][]rune{},
+				[]string{"a", "b"},
+			},
+			[]string{"a", "b"},
 		},
 	}
 	for _, tt := range tests {
