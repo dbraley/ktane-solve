@@ -31,6 +31,38 @@ func TestSolve(t *testing.T) {
 			},
 			[]string{"a", "b"},
 		},
+		{
+			"Filters on the first letter",
+			args{
+				map[int][]rune{
+					0: {'a', 'c'},
+				},
+				[]string{"a", "b"},
+			},
+			[]string{"a"},
+		},
+		{
+			"Filters on the second letter",
+			args{
+				map[int][]rune{
+					1: {'a', 'c'},
+				},
+				[]string{"xc", "xb"},
+			},
+			[]string{"xc"},
+		},
+		{
+			"Filters on all letters",
+			args{
+				map[int][]rune{
+					0: {'a', 'd'},
+					1: {'b', 'd'},
+					2: {'c', 'd'},
+				},
+				[]string{"aaa", "bbb", "ccc", "ddd"},
+			},
+			[]string{"ddd"},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
